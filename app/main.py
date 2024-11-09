@@ -1,20 +1,43 @@
-# app/main.py
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
 from app.services import search_by_date, search_by_title, search_by_abstract
 
-app = FastAPI()
+from app.schemas import PublishDateModel
+
+app = FastAPI(swagger_ui_parameters={"defaultModelsExpandDepth": -1})
 
 
 @app.get("/search/date")
-async def search_date(publication_date: str):
+async def search_date(publication_date: str = Query(
+        ...,
+        description="Publication date in YYYY-MM-DD format.",
+        example="2024-11-09"
+            )
+        ):
+    print("\n", "- " * 30, f"\npublication_date: {publication_date}", "\n", "- " * 30, "\n")
+    try:
+        PublishDateModel(publication_date=publication_date)
+    except ValueError:
+        raise HTTPException(status_code=404, detail="Publication date must be in YYYY-MM-DD format.")
     return await search_by_date(publication_date)
 
 
 @app.get("/search/title")
-async def search_title(keyword: str):
+async def search_title(keyword: str = Query(
+        ...,
+        description="Search by Publication Title keywords",
+        example="acl+regeneration"
+            )
+        ):
+    print("\n", "- " * 30, f"\nsearch_title: {keyword}", "\n", "- " * 30, "\n")
     return await search_by_title(keyword)
 
 
 @app.get("/search/abstract")
-async def search_abstract(keyword: str):
+async def search_abstract(keyword: str = Query(
+        ...,
+        description="Search within the Abstracts of Articles",
+        example="genetic+mutations"
+            )
+        ):
+    print("\n", "- " * 30, f"\nsearch_abstract: {keyword}", "\n", "- " * 30, "\n")
     return await search_by_abstract(keyword)
