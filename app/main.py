@@ -34,7 +34,7 @@ async def search_title(keyword: str = Query(
 async def search_abstract(keyword: str = Query(
         ...,
         description="Search within the Abstracts of Articles",
-        example="genetic+mutations"
+        example="Ligament Injuries to the Knee"
             )
         ):
     return await search_by_abstract(keyword)
