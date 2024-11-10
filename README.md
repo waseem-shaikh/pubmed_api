@@ -1,7 +1,7 @@
 ## PubMed API Wrapper
 
 
-> The U.S. government's PubMed website ([website](https://pubmed.ncbi.nlm.nih.gov)) is a vast resource for biomedical information. This project provides a **FastAPI** wrapper that simplifies access to PubMed's search functionality. Users can search for articles by publication date, title, and abstract.
+> The U.S. government's PubMed ([website](https://pubmed.ncbi.nlm.nih.gov)) is a vast resource for biomedical information. This project provides a **FastAPI** wrapper that simplifies access to PubMed's search functionality. Users can search for articles by publication date, title, and abstract.
 
 **Example Search URL**: Find ACL articles published in 2024: [Search for ACL articles in 2024](https://pubmed.ncbi.nlm.nih.gov/?term=acl&filter=dates.2024/1/1-2024/12/31)
 
@@ -90,17 +90,17 @@ Here's an overview of the code and key files:
 
 This project can be easily scaled and optimized in these ways:
 
+* **Database Storage:** Consider storing PubMed data in a database (e.g., PostgreSQL) for extensive data analysis and improved query performance.
 * **Caching:** Implement a caching layer (e.g., Redis) to store frequently accessed data and reduce API calls.
 * **Rate Limiting:**  Control request frequency (especially for public-facing use cases) by implementing rate limiting.
 * **Load Balancing:** Distribute requests across multiple servers using load balancing for high-traffic applications.
-* **Asynchronous Requests:** Leverage FastAPI's async capabilities for concurrent request handling.
-* **Database Storage:** Consider storing PubMed data in a database (e.g., PostgreSQL) for extensive data analysis and improved query performance. 
+ 
 
 ## Limitations
 
 Keep these limitations in mind:
 
-* **API Rate Limits:**  The PubMed API might have rate limits. Implement request throttling and error handling to prevent service interruptions.
-* **Data Consistency:** Real-time data retrieval from PubMed means results might change over time. Local caching can offer a more consistent experience but may become outdated.
-* **Data Volume:** PubMed returns large amounts of data. This wrapper retrieves specific information (publication date, title, abstract). Extensive analysis might require additional filtering and pagination features.
 * **Limited Search Parameters:** This implementation focuses on publication date, title, and abstract.  Adding more filters (author, journal) would require additional endpoints and logic.
+* **API Rate Limits:**  The PubMed API might have rate limits. Implement request throttling and error handling to prevent service interruptions.
+* **Data Volume:** PubMed returns large amounts of data. This wrapper retrieves specific information (publication date, title, abstract). Extensive analysis might require additional filtering and pagination features.
+
