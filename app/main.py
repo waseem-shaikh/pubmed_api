@@ -13,7 +13,6 @@ async def search_date(publication_date: str = Query(
         example="2024-11-09"
             )
         ):
-    print("\n", "- " * 30, f"\npublication_date: {publication_date}", "\n", "- " * 30, "\n")
     try:
         PublishDateModel(publication_date=publication_date)
     except ValueError:
@@ -28,7 +27,6 @@ async def search_title(keyword: str = Query(
         example="acl+regeneration"
             )
         ):
-    print("\n", "- " * 30, f"\nsearch_title: {keyword}", "\n", "- " * 30, "\n")
     return await search_by_title(keyword)
 
 
@@ -39,5 +37,4 @@ async def search_abstract(keyword: str = Query(
         example="genetic+mutations"
             )
         ):
-    print("\n", "- " * 30, f"\nsearch_abstract: {keyword}", "\n", "- " * 30, "\n")
     return await search_by_abstract(keyword)

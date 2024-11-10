@@ -1,95 +1,106 @@
-PubMed API
-
-"The U.S. government’s PubMed [website](https://pubmed.ncbi.nlm.nih.gov) is a treasure of biomedical information."
-
-This project is a FastAPI-based implementation that serves as a wrapper around the PubMed API, allowing users to search for articles by publication date, title, and abstract.
-
-Example: https://pubmed.ncbi.nlm.nih.gov/?term=acl&filter=dates.2024/1/1-2024/12/31
+## PubMed API Wrapper
 
 
-Table of Contents
+> The U.S. government's PubMed website ([website](https://pubmed.ncbi.nlm.nih.gov)) is a vast resource for biomedical information. This project provides a **FastAPI** wrapper that simplifies access to PubMed's search functionality. Users can search for articles by publication date, title, and abstract.
 
-    Setup Instructions
-    Code Structure
-    Scalability Considerations
-    Limitations
+**Example Search URL**: Find ACL articles published in 2024: [Search for ACL articles in 2024](https://pubmed.ncbi.nlm.nih.gov/?term=acl&filter=dates.2024/1/1-2024/12/31)
 
-1. Setup Instructions
-Prerequisites
+## Table of Contents
 
-    Python 3.8+
-    Git (for cloning the repository)
-    Docker (optional, if you wish to run the project in a container)
+* [Setup Instructions](#setup-instructions)
+* [Code Structure](#code-structure)
+* [Scalability Considerations](#scalability-considerations)
+* [Limitations](#limitations)
 
-Steps
+## Setup Instructions
 
-    Clone the Repository
+**Prerequisites:**
 
-git clone <repository_url>
-cd <repository_name>
+* Python 3.8+
+* Git (for cloning)
+* Docker (optional, for containerized deployment)
 
-Set Up a Virtual Environment (Recommended)
+**Steps:**
 
-python3 -m venv venv
-source venv/bin/activate  # On Linux/macOS
-venv\Scripts\activate     # On Windows
+1. **Clone the Repository:**
 
-Install Dependencies
+   ```bash
+   git clone <repository_url>
+   cd <repository_name>
+   ```
 
-pip install -r requirements.txt
+2. **Set Up Virtual Environment (Recommended):**
 
-Run the Application
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate  # Linux/macOS
+   venv\Scripts\activate     # Windows
+   ```
 
-uvicorn app.main:app --reload
+3. **Install Dependencies:**
 
-This starts the FastAPI server on http://localhost:8000.
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-Run Tests
+4. **Run the Application:**
 
-To run the tests, use:
+   ```bash
+   uvicorn app.main:app --reload
+   ```
 
-    pytest
+   This starts the FastAPI server at http://localhost:8000.
 
-2. Code Structure
+5. **Run Tests:**
 
-Here's an overview of the code structure and key files:
+   ```bash
+   pytest
+   ```
 
+## Code Structure
+
+Here's an overview of the code and key files:
+
+```
 .
 ├── app/
-│   ├── main.py                # FastAPI app and route definitions
-│   ├── services.py            # Functions that call PubMed API for various search types
+│   ├── main.py                # FastAPI app & endpoint definitions
+│   ├── services.py            # Functions for PubMed API calls
 │   ├── schemas.py             # Data models for API responses
-│   └── config.py              # Configuration settings (e.g., API URLs)
+│   └── config.py              # Configuration settings (API URLs)
 │
 ├── tests/
-│   ├── test_services.py       # Unit tests for service functions
+│   └── test_services.py       # Unit tests for service functions
 │
 ├── Dockerfile                 # Docker configuration for containerizing the app
 ├── requirements.txt           # List of Python dependencies
 └── README.md                  # Documentation
+```
 
-    app/main.py: Contains the FastAPI application and endpoint definitions for searching articles by date, title, and abstract.
-    app/services.py: Contains core service functions that interact with the PubMed API. Includes validation to ensure dates follow YYYY-mm-dd format.
-    app/schemas.py: Holds data models (using Pydantic) that define the structure of data returned by the API.
-    tests/test_services.py: Contains tests for services.py functions, verifying the expected outputs of each search type.
-    Dockerfile: Defines the environment for containerizing the application.
-    requirements.txt: Lists the dependencies required to run the application.
+**key files:**
 
-3. Scalability Considerations
+- `app/main.py`: Defines the FastAPI application and endpoints for searching.
+- `app/services.py`: Contains functions interacting with the PubMed API.
+- `app/schemas.py`: Defines data models (using Pydantic) for API responses.
+- `tests/test_services.py`: Houses service function tests, verifying outputs.
+- `Dockerfile`: Sets up the container environment for the application.
+- `requirements.txt`: Lists dependencies needed to run the application.
 
-This project is designed for easy scaling and optimization in the following ways:
+## Scalability Considerations
 
-    Caching: Adding a caching layer (e.g., Redis) can store frequently accessed data, reducing repeated API calls and latency.
-    Rate Limiting: Implementing rate limiting can help manage heavy loads by controlling the number of requests over time, especially if this wrapper will be public-facing.
-    Load Balancing: Deploying the FastAPI app on multiple servers and load balancing requests across them will improve scalability for high-traffic applications.
-    Asynchronous Requests: FastAPI’s async capabilities allow concurrent handling of requests, enabling the application to serve multiple users simultaneously with minimal response time.
-    Database Storage: For applications that require more extensive data analysis, consider storing PubMed data in a local database (e.g., PostgreSQL) to reduce reliance on the API and improve query performance.
+This project can be easily scaled and optimized in these ways:
 
-4. Limitations
+* **Caching:** Implement a caching layer (e.g., Redis) to store frequently accessed data and reduce API calls.
+* **Rate Limiting:**  Control request frequency (especially for public-facing use cases) by implementing rate limiting.
+* **Load Balancing:** Distribute requests across multiple servers using load balancing for high-traffic applications.
+* **Asynchronous Requests:** Leverage FastAPI's async capabilities for concurrent request handling.
+* **Database Storage:** Consider storing PubMed data in a database (e.g., PostgreSQL) for extensive data analysis and improved query performance. 
 
-There are several limitations and challenges to keep in mind:
+## Limitations
 
-    API Rate Limits: The PubMed API may have rate limits, restricting the number of requests per minute/hour. Implementing request throttling and error handling is recommended to prevent interruptions.
-    Data Consistency: Since this wrapper retrieves real-time data from PubMed, results might change over time. Caching data locally could provide a more consistent experience, though it may become outdated.
-    Data Volume: PubMed returns a large volume of data. This wrapper only fetches specific information (like publication date, title, and abstract) but may require additional filtering and pagination for extensive data.
-    Limited Search Parameters: This implementation focuses on publication date, title, and abstract. Adding further filters (like author, journal) would require additional endpoints and logic.
+Keep these limitations in mind:
+
+* **API Rate Limits:**  The PubMed API might have rate limits. Implement request throttling and error handling to prevent service interruptions.
+* **Data Consistency:** Real-time data retrieval from PubMed means results might change over time. Local caching can offer a more consistent experience but may become outdated.
+* **Data Volume:** PubMed returns large amounts of data. This wrapper retrieves specific information (publication date, title, abstract). Extensive analysis might require additional filtering and pagination features.
+* **Limited Search Parameters:** This implementation focuses on publication date, title, and abstract.  Adding more filters (author, journal) would require additional endpoints and logic.

@@ -4,7 +4,7 @@ from app.config import BASE_URL
 from datetime import date
 
 
-async def search_by_date(publication_date: date):
+async def search_by_date(publication_date: str):
     query_url = f"{BASE_URL}&term={publication_date}[dp]"
     response = requests.get(query_url)
     if response.status_code != 200:
