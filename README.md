@@ -96,7 +96,6 @@ This project can be easily scaled and optimized in these ways:
 * **Database Storage:** Consider storing PubMed data in a database (e.g., PostgreSQL) for extensive data analysis and improved query performance.
 * **Caching:** Implement a caching layer (e.g., Redis) to store frequently accessed data and reduce API calls.
 * **Rate Limiting:**  Control request frequency (especially for public-facing use cases) by implementing rate limiting.
-* **Load Balancing:** Distribute requests across multiple servers using load balancing for high-traffic applications.
  
 
 ## Limitations
