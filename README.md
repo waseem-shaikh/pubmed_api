@@ -49,7 +49,10 @@
    uvicorn app.main:app --reload
    ```
 
-   This starts the FastAPI server at http://localhost:8000.
+   This starts the FastAPI server at http://localhost:8000
+
+   API Swagger at http://localhost:8000/docs
+
 
 5. **Run Tests:**
 
